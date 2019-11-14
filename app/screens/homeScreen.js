@@ -200,6 +200,43 @@ export default class App extends Component {
     }
   };
 
+  getEmoji = weatherType => {
+    if (weatherType == 'Clouds') {
+      return '☁️';
+    }
+
+    if (weatherType == 'Clear') {
+      return '☀️';
+    }
+
+    if (weatherType == 'Haze') {
+      return '🌥';
+    }
+
+    if (weatherType == 'Smoke') {
+      return '🌥';
+    }
+
+    if (weatherType == 'Thunderstom') {
+      return '⛈';
+    }
+
+    if (weatherType == 'Rain') {
+      return '🌧';
+    }
+
+    if (weatherType == 'Snow') {
+      return '❄';
+    }
+
+    if (weatherType == 'Mist') {
+      return '🌫';
+    }
+    if (weatherType == 'Fog') {
+      return '🌫';
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -215,7 +252,7 @@ export default class App extends Component {
             fontWeight: 'bold',
           }}
         >
-          CityWeather
+          ☀️ CityWeather
         </Text>
         <FlatList
           style={{ width: '100%' }}
@@ -239,7 +276,7 @@ export default class App extends Component {
                       styles.cityTemp,
                     ]}
                   >
-                    {item.temp}°C
+                    {this.getEmoji(item.type)} {item.temp}°C
                   </Text>
                   <Text style={styles.cityName}>{item.name}</Text>
                 </View>

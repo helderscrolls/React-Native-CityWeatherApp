@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
   searchButton: {
     backgroundColor: 'grey',
     padding: 20,
+    marginBottom: 15,
     borderRadius: 8,
   },
   errorMessage: {

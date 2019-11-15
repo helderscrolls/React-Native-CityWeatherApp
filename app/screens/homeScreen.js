@@ -12,7 +12,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    // var navigation = this.props.navigation;
     this.state = {
       cities: [
         {
@@ -248,19 +247,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text
-          style={{
-            width: '100%',
-            paddingTop: 40,
-            paddingBottom: 15,
-            backgroundColor: 'black',
-            color: 'white',
-            textAlign: 'center',
-            fontWeight: 'bold',
-          }}
-        >
-          ☀️ CityWeather
-        </Text>
+        <Text style={styles.header}>☀️ CityWeather</Text>
         <FlatList
           style={{ width: '100%' }}
           data={this.state.list}
@@ -295,42 +282,14 @@ export default class App extends Component {
         />
 
         {this.state.newAlert == 1 ? (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              height: '100%',
-              width: '100%',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            }}
-          >
-            <View style={{ width: '75%', height: 90 }}>
+          <View style={styles.newAlertContainer}>
+            <View style={styles.alertMessageContainer}>
               <LinearGradient
-                style={{
-                  flex: 1,
-                  borderRadius: 20,
-                  justifyContent: 'space-between',
-                  padding: 5,
-                  shadowColor: 'black',
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.3,
-                  shadowRadius: 2,
-                }}
+                style={styles.gradientBackground}
                 colors={['#136a8a', '#267871']}
                 start={[0, 0.65]}
               >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: 'white',
-                    padding: 10,
-                    textAlign: 'center',
-                  }}
-                >
+                <Text style={styles.alertMessageText}>
                   {this.state.alertMsg}
                 </Text>
 
@@ -338,16 +297,7 @@ export default class App extends Component {
                   underlayColor="white"
                   onPress={() => this.setState({ alertMsg: '', newAlert: 0 })}
                 >
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: 'white',
-                      padding: 10,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Close
-                  </Text>
+                  <Text style={styles.closeButton}>Close</Text>
                 </TouchableHighlight>
               </LinearGradient>
             </View>
@@ -364,6 +314,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  header: {
+    width: '100%',
+    paddingTop: 40,
+    paddingBottom: 15,
+    backgroundColor: 'black',
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   row: {
     flex: 1,
@@ -398,5 +357,42 @@ const styles = StyleSheet.create({
   },
   veryHot: {
     color: 'red',
+  },
+  gradientBackground: {
+    flex: 1,
+    borderRadius: 20,
+    justifyContent: 'space-between',
+    padding: 5,
+  },
+  newAlertContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  alertMessageContainer: {
+    width: '75%',
+    height: 90,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+  },
+  alertMessageText: {
+    fontSize: 16,
+    color: 'white',
+    padding: 10,
+    textAlign: 'center',
+  },
+  closeButton: {
+    fontWeight: 'bold',
+    color: 'white',
+    padding: 10,
+    textAlign: 'center',
   },
 });

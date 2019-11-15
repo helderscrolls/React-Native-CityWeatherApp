@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Keyboard,
   Dimensions,
   View,
   Text,
@@ -13,7 +14,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    // var navigation = this.props.navigation;
     this.state = {
       searchInput: '',
       searchResult: 0,
@@ -124,45 +124,22 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Text
-          style={{
-            width: '100%',
-            paddingTop: 40,
-            paddingBottom: 15,
-            backgroundColor: 'black',
-            color: 'white',
-            textAlign: 'center',
-            fontWeight: 'bold',
-          }}
-        >
-          ☀️ CityWeather
-        </Text>
+        <Text style={styles.header}>☀️ CityWeather</Text>
 
         <View style={{ alignItems: 'center', width: '90%' }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              lineHeight: 20,
-              padding: 5,
-              fontSize: 16,
-            }}
-          >
-            Search for a city
-          </Text>
+          <Text style={styles.searchTitle}>Search for a city</Text>
           <TextInput
             onChangeText={text => this.setState({ searchInput: text })}
             value={this.state.searchInput}
-            style={{
-              width: '80%',
-              padding: 15,
-              margin: 5,
-              backgroundColor: 'black',
-              color: 'white',
-            }}
+            style={styles.searchInput}
+            onSubmitEditing={this.searchCity}
           />
           <TouchableHighlight
-            style={{ backgroundColor: 'grey', padding: 20, borderRadius: 8 }}
-            onPress={() => this.searchCity()}
+            style={styles.searchButton}
+            onPress={() => {
+              this.searchCity();
+              Keyboard.dismiss();
+            }}
           >
             <Text style={{ fontSize: 14, color: 'white' }}>Search</Text>
           </TouchableHighlight>
@@ -191,13 +168,7 @@ export default class App extends Component {
             </LinearGradient>
           </TouchableHighlight>
         ) : (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.errorMessage}>
             <Text>{this.state.error}</Text>
           </View>
         )}
@@ -212,6 +183,38 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  header: {
+    width: '100%',
+    paddingTop: 40,
+    paddingBottom: 15,
+    backgroundColor: 'black',
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  searchTitle: {
+    textAlign: 'center',
+    lineHeight: 20,
+    padding: 5,
+    fontSize: 16,
+  },
+  searchInput: {
+    width: '80%',
+    padding: 15,
+    margin: 5,
+    backgroundColor: 'black',
+    color: 'white',
+  },
+  searchButton: {
+    backgroundColor: 'grey',
+    padding: 20,
+    borderRadius: 8,
+  },
+  errorMessage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   row: {
     flex: 1,

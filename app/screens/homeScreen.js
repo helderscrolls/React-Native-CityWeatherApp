@@ -115,8 +115,11 @@ export default class App extends Component {
       list: [],
       isRefreshing: true,
       isLoading: true,
+      newAlert: 0,
     };
+  }
 
+  componentDidMount() {
     this.fetchTemps();
   }
 
@@ -217,7 +220,7 @@ export default class App extends Component {
       return '🌥';
     }
 
-    if (weatherType == 'Thunderstom') {
+    if (weatherType == 'Thunderstorm') {
       return '⛈';
     }
 
@@ -233,6 +236,10 @@ export default class App extends Component {
       return '🌫';
     }
     if (weatherType == 'Fog') {
+      return '🌫';
+    }
+
+    if (weatherType == 'Drizzle') {
       return '🌫';
     }
   };
@@ -263,7 +270,9 @@ export default class App extends Component {
           renderItem={({ item, index }) => (
             <TouchableHighlight
               underlayColor="white"
-              onPress={() => alert(item.desc)}
+              onPress={() =>
+                this.setState({ newAlert: 1, alertMsg: item.desc })
+              }
             >
               <LinearGradient
                 colors={['rgba(0,0,0,0.05)', 'rgba(0,0,0,0)']}
@@ -284,6 +293,66 @@ export default class App extends Component {
             </TouchableHighlight>
           )}
         />
+
+        {this.state.newAlert == 1 ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            <View style={{ width: '75%', height: 90 }}>
+              <LinearGradient
+                style={{
+                  flex: 1,
+                  borderRadius: 20,
+                  justifyContent: 'space-between',
+                  padding: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 2,
+                }}
+                colors={['#136a8a', '#267871']}
+                start={[0, 0.65]}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: 'white',
+                    padding: 10,
+                    textAlign: 'center',
+                  }}
+                >
+                  {this.state.alertMsg}
+                </Text>
+
+                <TouchableHighlight
+                  underlayColor="white"
+                  onPress={() => this.setState({ alertMsg: '', newAlert: 0 })}
+                >
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: 'white',
+                      padding: 10,
+                      textAlign: 'center',
+                    }}
+                  >
+                    Close
+                  </Text>
+                </TouchableHighlight>
+              </LinearGradient>
+            </View>
+          </View>
+        ) : null}
       </View>
     );
   }
